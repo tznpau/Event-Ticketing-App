@@ -214,6 +214,27 @@ TipBilet Bilet::alegeTipBilet(string tip)
 	}
 }
 
+//metoda de cumparare a biletului
+void Bilet::cumparareBilet()
+{
+	int* locuri_ = eveniment.getLocuri();
+	int nrMaxLocuri_ = eveniment.getNrMaxLocuri();
+
+	cout << "Loc disponbil: " << " Rand " << rand << " Loc " << loc << endl;
+	cout << "Doriti sa cumparati acest loc ? (Y/N)" << endl;
+	string alegere;
+	cin >> alegere;
+	if ((alegere == "Y") || (alegere == "y"))
+	{
+		ocupat = true;
+		eveniment.ocupareLoc(locuri_, nrMaxLocuri_, loc);
+	}
+	else
+	{
+		throw "Locul nu a fost cumparat.";
+	}
+}
+
 //metoda statica
 int Bilet::getNrBilete()
 {

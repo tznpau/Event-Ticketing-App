@@ -448,6 +448,26 @@ int Eveniment::getNrEvenimente()
 	return contorEvenimente;
 }
 
+//metoda de ocupare a locului
+void Eveniment::ocupareLoc(int* locuri, int nrMaxLocuri, int loc)
+{
+	if (nrMaxLocuri > 0 && locuri != nullptr)
+	{
+		this->nrMaxLocuri = nrMaxLocuri;
+		this->locuri = new int[nrMaxLocuri];
+		this->locuri[loc] = 1;
+	}
+	else
+		throw "Locul nu a putut fi ocupat.";
+}
+
+//metoda de aflare a locurilor disponibile
+int Eveniment::nrLocuriDisponibile()
+{
+	int nrDisponibile = nrMaxLocuri - nrOcupate;
+	return nrDisponibile;
+}
+
 //supraincarcari
 
 //operator de indexare []

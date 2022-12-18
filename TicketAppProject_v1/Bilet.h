@@ -27,6 +27,7 @@ private:
 	int rand;
 	int loc;
 	bool ocupat;
+	Eveniment eveniment;
 	
 public:
 	//constructori
@@ -53,8 +54,8 @@ public:
 
 	//metode
 	TipBilet alegeTipBilet(string tip);
-	//metoda de aflare a disponibilitatii locului
-
+	//metoda de cumparare a biletului
+	void cumparareBilet();
 	//metoda statica
 	static int getNrBilete();
 

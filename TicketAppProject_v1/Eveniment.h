@@ -56,8 +56,10 @@ public:
 	Ora getOra();
 
 	//metode
+	//metoda de ocupare a locului
+	void ocupareLoc(int*, int, int);
 	//metoda de aflare al numarului de locuri disponibile
-
+	int nrLocuriDisponibile();
 	//metoda statica
 	static int getNrEvenimente();
 
@@ -72,7 +74,6 @@ public:
 	int& operator[](int index);
 	Eveniment& operator++();
 	Eveniment operator++(int);
-
 
 	//clase friend
 	friend class Bilet;
