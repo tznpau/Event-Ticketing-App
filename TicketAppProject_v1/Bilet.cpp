@@ -38,5 +38,22 @@ Bilet::Bilet(long long UID, TipBilet tip, float pret, int rand, int coloana, int
 		this->pret = pret;
 	}
 
+	
 
+}
+
+
+//metoda de extragere a valorilor din enum (categorie bilet)
+TipBilet Bilet::alegeTipBilet(string tip)
+{
+	if (tip == "Standard")
+	{
+		return (TipBilet)0;
+	}
+	else if (tip == "Premium")
+	{
+		return (TipBilet)1;
+	}
+	else
+		cout << "Tip invalid." << endl;
 }

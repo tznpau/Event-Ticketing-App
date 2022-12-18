@@ -259,3 +259,26 @@ ostream& operator<<(ostream& out, User sursa)
 
 	return out;
 }
+
+//metoda de extragere a valorilor din enum (categoria userilor)
+CategorieUser User::alegeCategorie(string categorie)
+{
+	if (categorie == "Adult")
+	{
+		return (CategorieUser)0;
+	}
+	else if (categorie == "Elev")
+	{
+		return (CategorieUser)1;
+	}
+	else if (categorie == "Student")
+	{
+		return (CategorieUser)2;
+	}
+	else if (categorie == "Pensionar")
+	{
+		return (CategorieUser)3;
+	}
+	else
+		cout << "Categorie invalida." << endl;
+}

@@ -45,6 +45,7 @@ public:
 	int getVarsta();
 
 	//metode
+	CategorieUser alegeCategorie(string categorie);
 
 	//metoda de validare a adresei de email introduse
 	bool emailValid(string&);

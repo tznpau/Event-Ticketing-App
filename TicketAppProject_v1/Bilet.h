@@ -21,8 +21,6 @@ private:
 	const int nrBilet = 0;
 	static int contorBilete;
 	long long UID; //ID unic ce nu poate fi ghicit
-	//int* UID;
-	//int dimUID;
 	TipBilet tip;
 	float pret;
 	int rand;
@@ -54,6 +52,7 @@ public:
 	int** getLoc();
 
 	//metode
+	TipBilet alegeTipBilet(string tip);
 	//metoda de aflare a disponibilitatii locului
 
 	//operator=

@@ -3,7 +3,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <string>
-#include "Bilet.h"
 #include "Data.h"
 #include "Ora.h"
 
@@ -22,12 +21,12 @@ private:
 	Data data;
 	Ora ora;
 	
-
 public:
 	//constructori
 	Eveniment();
 	Eveniment(const char*, string, int, int, int, Data, Ora);
 	Eveniment(const Eveniment& sursa);
+	Eveniment(int, int);
 
 	//destructor
 	~Eveniment();

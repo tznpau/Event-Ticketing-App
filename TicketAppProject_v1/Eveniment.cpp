@@ -20,6 +20,35 @@ Eveniment::Eveniment() : idEveniment(Eveniment::contorEvenimente++)
 
 }
 
+//constructor cu 2 parametri (nrRanduri si nrLocuriPeRand)
+Eveniment::Eveniment(int nrRanduri, int nrLocuriPeRand)
+{
+	if (nrRanduri >= 2 && nrRanduri <= 50)
+	{
+		this->nrRanduri = nrRanduri;
+	}
+	else
+		throw "Numarul de randuri nu este valid.";
+
+	if (nrLocuriPeRand >= 5 && nrLocuriPeRand <= 10)
+	{
+		this->nrLocuriPeRand = nrLocuriPeRand;
+	}
+	else
+		throw "Numarul de locuri pe rand nu este valid.";
+
+	//restul parametrilor
+	this->nrMaxLocuri = this->nrLocuriPeRand * this->nrRanduri;
+
+	this->titlu = new char[strlen("N/A") + 1];
+	strcpy_s(this->titlu, strlen("N/A") + 1, "N/A");
+
+	this->tipEveniment = "N/A";
+
+	Data* data = new Data(0, 0, 2023);
+	Ora* ora = new Ora(00, 00);
+}
+
 //constructor cu toti parametri
 Eveniment::Eveniment(const char* titlu, string tipEveniment, int nrMaxLocuri, int nrRanduri, int nrLocuriPeRand, Data data, Ora ora) : idEveniment(Eveniment::contorEvenimente++)
 {
