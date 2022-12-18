@@ -35,7 +35,7 @@ public:
 
 	//alti operatori
 	Ora operator+(const Ora& sursa);
-	Ora operator+(int nrOre);
+	Ora operator+(int);
 	Ora operator-=(const Ora& sursa);
 
 	//clase friend

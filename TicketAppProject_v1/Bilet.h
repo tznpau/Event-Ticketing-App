@@ -55,6 +55,9 @@ public:
 	TipBilet alegeTipBilet(string tip);
 	//metoda de aflare a disponibilitatii locului
 
+	//metoda statica
+	static int getNrBilete();
+
 	//operator=
 	Bilet& operator=(const Bilet& sursa);
 
@@ -62,6 +65,12 @@ public:
 	friend istream& operator>>(istream& in, Bilet& sursa);
 	friend ostream& operator<<(ostream& out, Bilet sursa);
 	
+	//alti operatori
+	Bilet operator/(int x);
+	Bilet operator*(int x);
+	bool operator!();
+	explicit operator float();
+
 	//friend classes
 	//friend class User;
 	friend class Eveniment;

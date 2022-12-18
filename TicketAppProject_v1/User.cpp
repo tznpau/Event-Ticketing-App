@@ -300,6 +300,12 @@ CategorieUser User::alegeCategorie(string categorie)
 	}
 }
 
+//metoda statica
+int User::getNrUsers()
+{
+	return contorUsers;
+}
+
 //supraincarcari
 
 //++ postincrementare

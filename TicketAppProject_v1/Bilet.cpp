@@ -213,3 +213,39 @@ TipBilet Bilet::alegeTipBilet(string tip)
 		return (TipBilet)0;
 	}
 }
+
+//metoda statica
+int Bilet::getNrBilete()
+{
+	return contorBilete;
+}
+
+//supraincarcari
+
+//operator /
+Bilet Bilet::operator/(int x)
+{
+	Bilet copie = *this;
+	copie.pret /= x;
+	return copie;
+}
+
+//operator *
+Bilet Bilet::operator*(int x)
+{
+	Bilet copie = *this;
+	copie.pret *= x;
+	return copie;
+}
+
+//operator logic not !
+bool Bilet::operator!()
+{
+	return !this->ocupat;
+}
+
+//operator casting explicit float
+Bilet::operator float()
+{
+	return this->pret;
+}

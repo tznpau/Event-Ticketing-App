@@ -56,7 +56,10 @@ public:
 	Ora getOra();
 
 	//metode
-	//int** locuriLibere(Bilet*** matrice, int nrRanduri);
+	//metoda de aflare al numarului de locuri disponibile
+
+	//metoda statica
+	static int getNrEvenimente();
 
 	//operator=
 	Eveniment operator=(const Eveniment& sursa);
@@ -64,6 +67,12 @@ public:
 	//operatori de citire si de afisare
 	friend istream& operator>>(istream& in, Eveniment& sursa);
 	friend ostream& operator<<(ostream& out, Eveniment sursa);
+
+	//alti operatori
+	int& operator[](int index);
+	Eveniment& operator++();
+	Eveniment operator++(int);
+
 
 	//clase friend
 	friend class Bilet;

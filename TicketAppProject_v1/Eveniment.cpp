@@ -441,3 +441,38 @@ ostream& operator<<(ostream& out, Eveniment sursa)
 
 	return out;
 }
+
+//metoda statica
+int Eveniment::getNrEvenimente()
+{
+	return contorEvenimente;
+}
+
+//supraincarcari
+
+//operator de indexare []
+int& Eveniment::operator[](int index)
+{
+	if (index >= 0 && index < this->nrMaxLocuri)
+	{
+		return this->locuri[index];
+	}
+	else
+	{
+		throw new exception();
+	}
+}
+
+//operator ++ postincrementare
+Eveniment& Eveniment::operator++()
+{
+	this->nrOcupate++;
+	return *this;
+}
+
+Eveniment Eveniment::operator++(int)
+{
+	Eveniment copie = *this;
+	this->nrOcupate++;
+	return copie;
+}
