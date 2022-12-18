@@ -116,3 +116,32 @@ ostream& operator<<(ostream& out, Ora sursa)
 
 	return out;
 }
+
+//supraincarcari
+
+//operator+
+Ora Ora::operator+(const Ora& sursa)
+{
+	Ora copie = *this;
+	copie.ora = copie.ora + sursa.ora;
+	copie.minut = copie.minut + sursa.minut;
+	
+	if (copie.minut >= 60)
+	{
+		copie.ora++;
+		copie.minut -= 60;
+	}
+	
+	return copie;
+}
+
+Ora Ora::operator+(int nrOre)
+{
+	return Ora(this->ora + nrOre, this->minut);
+}
+
+Ora Ora::operator-=(const Ora& sursa)
+{
+	this->ora -= sursa.ora;
+	return *this;
+}

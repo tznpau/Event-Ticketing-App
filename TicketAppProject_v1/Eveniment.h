@@ -17,16 +17,17 @@ private:
 	string tipEveniment;
 	int nrMaxLocuri;
 	int nrRanduri;
-	int nrLocuriPeRand;
+	int* locuri; //vector locuri
+	char* zonaLocuri;
+	int nrOcupate;
 	Data data;
 	Ora ora;
 	
 public:
 	//constructori
 	Eveniment();
-	Eveniment(const char*, string, int, int, int, Data, Ora);
+	Eveniment(const char*, string, int, int, int*, const char*, int, Data, Ora);
 	Eveniment(const Eveniment& sursa);
-	Eveniment(int, int);
 
 	//destructor
 	~Eveniment();
@@ -37,7 +38,9 @@ public:
 	void setTipEveniment(string);
 	void setNrMaxLocuri(int);
 	void setNrRanduri(int);
-	void setNrLocuriPeRand(int);
+	void setLocuri(int*, int);
+	void setZonaLocuri(const char*);
+	void setNrOcupate(int);
 	void setData(Data);
 	void setOra(Ora);
 
@@ -46,12 +49,14 @@ public:
 	string getTipEveniment();
 	int getNrMaxLocuri();
 	int getNrRanduri();
-	int getNrLocuriPeRand();
+	int* getLocuri();
+	const char* getZonaLocuri();
+	int getNrOcupate();
 	Data getData();
 	Ora getOra();
 
 	//metode
-	//int** locuriLibere(Bilet*** matrice, int nrLocuriPeRand, int nrRanduri);
+	//int** locuriLibere(Bilet*** matrice, int nrRanduri);
 
 	//operator=
 	Eveniment operator=(const Eveniment& sursa);

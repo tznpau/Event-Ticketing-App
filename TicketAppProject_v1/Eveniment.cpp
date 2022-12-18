@@ -13,44 +13,21 @@ Eveniment::Eveniment() : idEveniment(Eveniment::contorEvenimente++)
 
 	this->nrMaxLocuri = 0;
 	this->nrRanduri = 0;
-	this->nrLocuriPeRand = 0;
+
+	this->locuri = nullptr;
+
+	this->zonaLocuri = new char[strlen("N/A") + 1];
+	strcpy_s(this->zonaLocuri, strlen("N/A") + 1, "N/A");
+
+	this->nrOcupate = 0;
 
 	Data* data = new Data(0, 0, 2023);
 	Ora* ora = new Ora(00, 00);
 
-}
-
-//constructor cu 2 parametri (nrRanduri si nrLocuriPeRand)
-Eveniment::Eveniment(int nrRanduri, int nrLocuriPeRand)
-{
-	if (nrRanduri >= 2 && nrRanduri <= 50)
-	{
-		this->nrRanduri = nrRanduri;
-	}
-	else
-		throw "Numarul de randuri nu este valid.";
-
-	if (nrLocuriPeRand >= 5 && nrLocuriPeRand <= 10)
-	{
-		this->nrLocuriPeRand = nrLocuriPeRand;
-	}
-	else
-		throw "Numarul de locuri pe rand nu este valid.";
-
-	//restul parametrilor
-	this->nrMaxLocuri = this->nrLocuriPeRand * this->nrRanduri;
-
-	this->titlu = new char[strlen("N/A") + 1];
-	strcpy_s(this->titlu, strlen("N/A") + 1, "N/A");
-
-	this->tipEveniment = "N/A";
-
-	Data* data = new Data(0, 0, 2023);
-	Ora* ora = new Ora(00, 00);
 }
 
 //constructor cu toti parametri
-Eveniment::Eveniment(const char* titlu, string tipEveniment, int nrMaxLocuri, int nrRanduri, int nrLocuriPeRand, Data data, Ora ora) : idEveniment(Eveniment::contorEvenimente++)
+Eveniment::Eveniment(const char* titlu, string tipEveniment, int nrMaxLocuri, int nrRanduri, int* locuri, const char* zonaLocuri, int nrOcupate, Data data, Ora ora) : idEveniment(Eveniment::contorEvenimente++)
 {
 	if (strlen(titlu) > 2)
 	{
@@ -70,28 +47,50 @@ Eveniment::Eveniment(const char* titlu, string tipEveniment, int nrMaxLocuri, in
 	}
 	else
 		throw "Tipul evenimentului nu este valid.";
-
-	if (nrMaxLocuri >= 10 && nrMaxLocuri <= 500)
-	{
-		this->nrMaxLocuri = nrMaxLocuri;
-	}
-	else
-		throw "Numarul maxim de locuri nu este valid.";
 		
 
-	if (nrRanduri >= 2 && nrRanduri <= 50)
+	if (nrRanduri > 0)
 	{
 		this->nrRanduri = nrRanduri;
 	}
 	else
 		throw "Numarul de randuri nu este valid.";
 
-	if (nrLocuriPeRand >= 5 && nrLocuriPeRand <= 10)
+	if (nrMaxLocuri > 0 && locuri != nullptr)
 	{
-		this->nrLocuriPeRand = nrLocuriPeRand;
+		this->nrMaxLocuri = nrMaxLocuri;
+		this->locuri = new int[nrMaxLocuri];
+		for (int i = 0; i < nrMaxLocuri; i++)
+		{
+			if (locuri[i] >= 0)
+			{
+				this->locuri[i] = locuri[i];
+			}
+			else
+			{
+				this->locuri[i] = 0;
+			}
+		}
 	}
 	else
-		throw "Numarul de locuri pe rand nu este valid.";
+	{
+		this->nrMaxLocuri = 0;
+		this->locuri = nullptr;
+	}
+
+	if (strlen(zonaLocuri) > 3)
+	{
+		this->zonaLocuri = new char[strlen(zonaLocuri) + 1];
+		strcpy_s(this->zonaLocuri, strlen(zonaLocuri) + 1, zonaLocuri);
+	}
+	else
+	{
+		throw "Zona nu este valida.";
+		this->zonaLocuri = new char[strlen("N/A") + 1];
+		strcpy_s(this->zonaLocuri, strlen("N/A") + 1, "N/A");
+	}
+
+	this->nrOcupate;
 
 	if (data.dataValida(data.zi, data.luna, data.an))
 	{
@@ -117,9 +116,26 @@ Eveniment::Eveniment(const Eveniment& sursa) : idEveniment(Eveniment::contorEven
 
 	this->tipEveniment = sursa.tipEveniment;
 
-	this->nrMaxLocuri = sursa.nrMaxLocuri;
 	this->nrRanduri = sursa.nrRanduri;
-	this->nrLocuriPeRand = sursa.nrLocuriPeRand;
+
+	this->nrMaxLocuri = sursa.nrMaxLocuri;
+	this->locuri = new int[sursa.nrMaxLocuri];
+	for (int i = 0; i < sursa.nrMaxLocuri; i++)
+	{
+		if (sursa.locuri[i] >= 0)
+		{
+			this->locuri[i] = sursa.locuri[i];
+		}
+		else
+		{
+			this->locuri[i] = 0;
+		}
+	}
+
+	this->zonaLocuri = new char[strlen(sursa.zonaLocuri) + 1];
+	strcpy_s(this->zonaLocuri, strlen(sursa.zonaLocuri) + 1, sursa.zonaLocuri);
+
+	this->nrOcupate = sursa.nrOcupate;
 
 	this->data = sursa.data;
 	this->ora = sursa.ora;
@@ -133,21 +149,52 @@ Eveniment::~Eveniment()
 		delete[] this->titlu;
 		this->titlu = nullptr;
 	}
+
+	if (this->locuri != nullptr)
+	{
+		delete[] this->locuri;
+		this->locuri = nullptr;
+	}
+
+	if (this->zonaLocuri != nullptr)
+	{
+		delete[] this->zonaLocuri;
+		this->zonaLocuri = nullptr;
+	}
 }
 
 //operator=
 Eveniment Eveniment::operator=(const Eveniment& sursa)
 {
 	delete[] this->titlu;
+	this->locuri = nullptr;
+	delete[] this->zonaLocuri;
 
 	this->titlu = new char[strlen(sursa.titlu) + 1];
 	strcpy_s(this->titlu, strlen(sursa.titlu) + 1, sursa.titlu);
 
 	this->tipEveniment = sursa.tipEveniment;
 
-	this->nrMaxLocuri = sursa.nrMaxLocuri;
 	this->nrRanduri = sursa.nrRanduri;
-	this->nrLocuriPeRand = sursa.nrLocuriPeRand;
+
+	this->nrMaxLocuri = sursa.nrMaxLocuri;
+	this->locuri = new int[sursa.nrMaxLocuri];
+	for (int i = 0; i < sursa.nrMaxLocuri; i++)
+	{
+		if (sursa.locuri[i] >= 0)
+		{
+			this->locuri[i] = sursa.locuri[i];
+		}
+		else
+		{
+			this->locuri[i] = 0;
+		}
+	}
+
+	this->zonaLocuri = new char[strlen(sursa.zonaLocuri) + 1];
+	strcpy_s(this->zonaLocuri, strlen(sursa.zonaLocuri) + 1, sursa.zonaLocuri);
+
+	this->nrOcupate = sursa.nrOcupate;
 
 	this->data = sursa.data;
 	this->ora = sursa.ora;
@@ -181,7 +228,7 @@ void Eveniment::setTipEveniment(string tipEveniment)
 
 void Eveniment::setNrMaxLocuri(int nrMaxLocuri)
 {
-	if (nrMaxLocuri >= 10 && nrMaxLocuri <= 500)
+	if (nrMaxLocuri > 0)
 	{
 		this->nrMaxLocuri = nrMaxLocuri;
 	}
@@ -191,7 +238,7 @@ void Eveniment::setNrMaxLocuri(int nrMaxLocuri)
 
 void Eveniment::setNrRanduri(int nrRanduri)
 {
-	if (nrRanduri >= 2 && nrRanduri <= 50)
+	if (nrRanduri > 0)
 	{
 		this->nrRanduri = nrRanduri;
 	}
@@ -199,14 +246,48 @@ void Eveniment::setNrRanduri(int nrRanduri)
 		throw "Numarul de randuri nu este valid.";
 }
 
-void Eveniment::setNrLocuriPeRand(int nrLocuriPeRand)
+void Eveniment::setLocuri(int* locuri, int nrMaxLocuri)
 {
-	if (nrLocuriPeRand >= 5 && nrLocuriPeRand <= 10)
+	if (nrMaxLocuri > 0 && locuri != nullptr)
 	{
-		this->nrLocuriPeRand = nrLocuriPeRand;
+		this->nrMaxLocuri = nrMaxLocuri;
+		this->locuri = new int[nrMaxLocuri];
+		for (int i = 0; i < nrMaxLocuri; i++)
+		{
+			if (locuri[i] >= 0)
+			{
+				this->locuri[i] = locuri[i];
+			}
+			else
+			{
+				this->locuri[i] = 0;
+			}
+		}
 	}
 	else
-		throw "Numarul de locuri pe rand nu este valid.";
+	{
+		throw "Invalid.";
+	}
+}
+
+void Eveniment::setZonaLocuri(const char* zonaLocuri)
+{
+	if (strlen(zonaLocuri) > 3)
+	{
+		if (this->zonaLocuri != nullptr)
+		{
+			delete[] this->zonaLocuri;
+		}
+		this->zonaLocuri = new char[strlen(zonaLocuri) + 1];
+		strcpy_s(this->zonaLocuri, strlen(zonaLocuri) + 1, zonaLocuri);
+	}
+	else
+		throw "Zona este invalida.";
+}
+
+void Eveniment::setNrOcupate(int nrOcupate)
+{
+	this->nrOcupate = nrOcupate;
 }
 
 void Eveniment::setData(Data data)
@@ -250,9 +331,33 @@ int Eveniment::getNrRanduri()
 	return this->nrRanduri;
 }
 
-int Eveniment::getNrLocuriPeRand()
+int* Eveniment::getLocuri()
 {
-	return this->nrLocuriPeRand;
+	if (locuri != nullptr && nrMaxLocuri > 0)
+	{
+		int* copie = new int[nrMaxLocuri];
+		for (int i = 0; i < nrMaxLocuri; i++)
+		{
+			copie[i] = locuri[i];
+		}
+		nrMaxLocuri = nrMaxLocuri;
+		return copie;
+	}
+	else
+	{
+		locuri = nullptr;
+		return locuri;
+	}
+}
+
+const char* Eveniment::getZonaLocuri()
+{
+	return this->zonaLocuri;
+}
+
+int Eveniment::getNrOcupate()
+{
+	return this->nrOcupate;
 }
 
 Data Eveniment::getData()
@@ -282,17 +387,40 @@ istream& operator>>(istream& in, Eveniment& sursa)
 	in.getline(bufft, 100);
 	sursa.tipEveniment = bufft;
 
-	//nrMaxLocuri
-	cout << "Introduceti numarul maxim de locuri disponibile la eveniment: " << endl;
-	in >> sursa.nrMaxLocuri;
-
 	//nrRanduri
 	cout << "Introduceti numarul de randuri disponibile la eveniment: " << endl;
 	in >> sursa.nrRanduri;
 	
-	//nrLocuriPeRand
-	cout << "Introduceti numarul de locuri disponibile pe fiecare rand: " << endl;
-	in >> sursa.nrLocuriPeRand;
+	in.ignore();
+	//locuri + nrMaxLocuri
+	cout << "Introduceti numarul maxim de locuri disponibile la evenimetn: " << endl;
+	in >> sursa.nrMaxLocuri;
+	delete[] sursa.locuri;
+	sursa.locuri = new int[sursa.nrMaxLocuri];
+	for (int i = 0; i < sursa.nrMaxLocuri; i++)
+	{
+		cout << "Dati numarul de locuri: " << i + 1 << endl;
+		in >> sursa.locuri[i];
+	}
+
+	in.ignore();
+
+	//zonaLocuri
+	cout << "Introduceti zona: " << endl;
+	char bufferz[200];
+	in.getline(bufferz, 200);
+	delete[] sursa.zonaLocuri;
+	sursa.zonaLocuri = new char[strlen(bufferz) + 1];
+	strcpy_s(sursa.zonaLocuri, strlen(bufferz) + 1, bufferz);
+
+	//nrOcupate
+	cout << "Introduceti numarul de locuri ocupate: " << endl;
+	if (sursa.nrOcupate >= 0)
+	{
+		in >> sursa.nrOcupate;
+	}
+	else
+		sursa.nrOcupate = 0;
 
 	return in;
 }
@@ -303,7 +431,13 @@ ostream& operator<<(ostream& out, Eveniment sursa)
 	out << "Eveniment: " << sursa.tipEveniment << endl;
 	out << "Numar maxim de locuri disponibile: " << sursa.nrMaxLocuri << endl;
 	out << "Numar de randuri disponibile: " << sursa.nrRanduri << endl;
-	out << "Numar de locuri disponibile pe fiecare rand: " << sursa.nrLocuriPeRand << endl;
+	out << "Acestea sunt locurile disponibile si indisponibile: " << endl;
+	for (int i = 0; i < sursa.nrMaxLocuri; i++)
+	{
+		out << "Locul " << i + 1 << ": " << sursa.locuri[i] << endl;
+	}
+	out << "Zona: " << sursa.zonaLocuri << endl;
+	out << "Sunt ocupate " << sursa.nrOcupate << " locuri." << endl;
 
 	return out;
 }

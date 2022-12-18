@@ -33,6 +33,11 @@ public:
 	friend ostream& operator<<(ostream& out, Ora sursa);
 	friend istream& operator>>(istream& in, Ora& sursa);
 
+	//alti operatori
+	Ora operator+(const Ora& sursa);
+	Ora operator+(int nrOre);
+	Ora operator-=(const Ora& sursa);
+
 	//clase friend
 	friend class Eveniment;
 };

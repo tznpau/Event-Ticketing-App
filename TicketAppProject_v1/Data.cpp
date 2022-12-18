@@ -238,3 +238,38 @@ ostream& operator<<(ostream& out, Data sursa)
 
 	return out;
 }
+
+//supraincarcari
+
+//==
+bool Data::operator==(Data sursa)
+{
+	if (this->zi == sursa.zi && this->luna == sursa.luna && this->an == sursa.an)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Data::operator!=(Data sursa)
+{
+	return!(*this == sursa);
+}
+
+bool Data::operator<(Data sursa)
+{
+	if (this->zi < sursa.zi) return true;
+	if (this->zi > sursa.zi) return false;
+	if (this->luna < sursa.luna) return true;
+	if (this->luna > sursa.luna) return false;
+	if (this->an < sursa.an) return true;
+	return false;
+}
+
+bool Data::operator>(Data sursa)
+{
+	return sursa < *this;
+}

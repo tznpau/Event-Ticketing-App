@@ -46,6 +46,7 @@ public:
 
 	//metode
 	CategorieUser alegeCategorie(string categorie);
+	
 
 	//metoda de validare a adresei de email introduse
 	bool emailValid(string&);
@@ -56,5 +57,9 @@ public:
 	//operatori de citire si de afisare
 	friend istream& operator>>(istream& in, User& sursa);
 	friend ostream& operator<<(ostream& out, User sursa);
+
+	//alti operatori
+	User operator++(int);
+	bool operator==(const User& sursa);
 };
 

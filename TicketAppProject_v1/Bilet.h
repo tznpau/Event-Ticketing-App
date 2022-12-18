@@ -14,6 +14,7 @@ enum TipBilet {Standard, Premium};
 //explicatie enum:
 //bilet Standard = standard, optiunea cu pretul cel mai ieftin
 //bilet Premium = optiunea mai scumpa, corespondenta zonei cu mai putine locuri disponibile
+//tipul de bilet este corespondent zonei alese. Daca zona este normala (bilet normal la film, bilet in tribune, etc.), biletul este standard. daca zona este exclusiva (bilet vip la film, bilet la peluza, etc.), biletul este premium.
 
 class Bilet
 {
@@ -24,14 +25,13 @@ private:
 	TipBilet tip;
 	float pret;
 	int rand;
-	int coloana;
-	int** loc;
+	int loc;
 	bool ocupat;
 	
 public:
 	//constructori
 	Bilet();
-	Bilet(long long, TipBilet, float, int, int, int**, bool);
+	Bilet(long long, TipBilet, float, int, int, bool);
 	Bilet(const Bilet& sursa);
 
 	//metode de acces
@@ -40,16 +40,16 @@ public:
 	void setTipBilet(TipBilet);
 	void setPret(float);
 	void setRand(int);
-	void setColoana(int);
-	void setLoc(int**);
-
+	void setLoc(int);
+	void setOcupat(bool);
+	
 	//getteri
 	long long getUID();
 	TipBilet getTipBilet();
 	float getPret();
 	int getRand();
-	int getColoana();
-	int** getLoc();
+	int getLoc();
+	bool getOcupat();
 
 	//metode
 	TipBilet alegeTipBilet(string tip);
@@ -62,7 +62,6 @@ public:
 	friend istream& operator>>(istream& in, Bilet& sursa);
 	friend ostream& operator<<(ostream& out, Bilet sursa);
 	
-
 	//friend classes
 	//friend class User;
 	friend class Eveniment;

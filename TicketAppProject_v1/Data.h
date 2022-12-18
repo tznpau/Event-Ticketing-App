@@ -37,6 +37,10 @@ public:
 	friend istream& operator>>(istream& in, Data& sursa);
 
 	//alti operatori
+	bool operator==(Data sursa);
+	bool operator!=(Data sursa);
+	bool operator<(Data sursa);
+	bool operator>(Data sursa);
 
 	//clase friend
 	friend class Eveniment;

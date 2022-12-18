@@ -29,6 +29,7 @@ User::User(const char* nume, const char* prenume, string email, CategorieUser ca
 	}
 	else
 	{
+		throw "Nume invalid.";
 		this->nume = new char[strlen("N/A") + 1];
 		strcpy_s(this->nume, strlen("N/A") + 1, "N/A");
 	}
@@ -40,6 +41,7 @@ User::User(const char* nume, const char* prenume, string email, CategorieUser ca
 	}
 	else
 	{
+		throw "Prenume invalid.";
 		this->prenume = new char[strlen("N/A") + 1];
 		strcpy_s(this->prenume, strlen("N/A") + 1, "N/A");
 	}
@@ -51,20 +53,22 @@ User::User(const char* nume, const char* prenume, string email, CategorieUser ca
 	else
 	{
 		this->email = "N/A";
-		cout << "Email-ul nu este valid." << endl;
+		throw "Email invalid.";
 	}
 
 	if (categorie >= 0 && categorie <= 3)
 	{
 		this->categorie = categorie;
 	}
+	else
+		throw "Categorie invalida.";
 
 	if (varsta >= 13 && varsta <= 100)
 	{
 		this->varsta = varsta;
 	}
 	else
-		this->varsta = 0;
+		throw "Varsta invalida.";
 }
 
 //constructor de copiere
@@ -124,6 +128,8 @@ void User::setNume(const char* nume)
 		this->nume = new char[strlen(nume) + 1];
 		strcpy_s(this->nume, strlen(nume) + 1, nume);
 	}
+	else
+		throw "Nume invalid.";
 }
 
 void User::setPrenume(const char* prenume)
@@ -134,6 +140,8 @@ void User::setPrenume(const char* prenume)
 		this->prenume = new char[strlen(prenume) + 1];
 		strcpy_s(this->prenume, strlen(prenume) + 1, prenume);
 	}
+	else
+		throw "Prenume invalid.";
 }
 
 void User::setEmail(string email)
@@ -142,6 +150,8 @@ void User::setEmail(string email)
 	{
 		this->email = email;
 	}
+	else
+		throw "Email invalid.";
 }
 
 void User::setCategorie(CategorieUser categorie)
@@ -150,6 +160,8 @@ void User::setCategorie(CategorieUser categorie)
 	{
 		this->categorie = categorie;
 	}
+	else
+		throw "Categorie invalida.";
 }
 
 void User::setVarsta(int)
@@ -158,6 +170,8 @@ void User::setVarsta(int)
 	{
 		this->varsta = varsta;
 	}
+	else
+		throw "Varsta invalida.";
 }
 
 //getteri
@@ -235,7 +249,7 @@ istream& operator>>(istream& in, User& sursa)
 
 	//categorie user
 	int auxCategorie;
-	cout << "Selecteaza categoria utilizatorului: " << endl;
+	cout << "Selecteaza categoria utilizatorului (Adult - 0, Elev - 1, Student - 2, Pensionar - 3): " << endl;
 	in >> auxCategorie;
 	if ((auxCategorie >= 0) && (auxCategorie <= 3))
 	{
@@ -280,5 +294,24 @@ CategorieUser User::alegeCategorie(string categorie)
 		return (CategorieUser)3;
 	}
 	else
+	{
 		cout << "Categorie invalida." << endl;
+		return (CategorieUser)0;
+	}
+}
+
+//supraincarcari
+
+//++ postincrementare
+User User::operator++(int)
+{
+	User copie = *this;
+	this->varsta++;
+	return copie;
+}
+
+//==
+bool User::operator==(const User& sursa)
+{
+	return (strcmp(this->nume, sursa.nume) == 0) && (strcmp(this->prenume, sursa.prenume) == 0);
 }
