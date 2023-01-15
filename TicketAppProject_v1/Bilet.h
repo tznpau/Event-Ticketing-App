@@ -19,6 +19,7 @@ enum TipBilet {Standard, Premium};
 class Bilet
 {
 private:
+	User user;
 	const int nrBilet = 0;
 	static int contorBilete;
 	long long UID; //ID unic ce nu poate fi ghicit

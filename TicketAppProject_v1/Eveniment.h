@@ -3,6 +3,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <string>
+#include <fstream>
 #include "Data.h"
 #include "Ora.h"
 
@@ -79,4 +80,8 @@ public:
 	friend class Bilet;
 	friend class Data;
 	friend class Ora;
+
+	//fisiere
+	void scriereInFisier(ofstream&);
+	void citireDinFisier(ifstream&);
 };

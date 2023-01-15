@@ -496,3 +496,50 @@ Eveniment Eveniment::operator++(int)
 	this->nrOcupate++;
 	return copie;
 }
+
+//fisiere
+void Eveniment::scriereInFisier(ofstream& out)
+{
+	out << "Eveniment: " << this->titlu << endl;
+	out << "Categorie: " << this->tipEveniment << endl;
+	out << "Data: " << this->data << endl;
+	out << "Ora: " << this->ora << endl;
+
+	out << "Locuri: " << endl;
+	for (int i = 0; i < this->nrMaxLocuri; i++)
+	{
+		out << "Locul " << i + 1 << ": " << this->locuri[i] << endl;
+	}
+
+	out << "Sunt ocupate: " << this->nrOcupate << " locuri." << endl;
+}
+
+void Eveniment::citireDinFisier(ifstream& in)
+{
+	char buffer[300];
+	in.getline(buffer, 300);
+	delete[] this->titlu;
+	this->titlu = new char[strlen(buffer) + 1];
+	strcpy_s(this->titlu, strlen(buffer) + 1, buffer);
+
+	char bufft[100];
+	in.getline(bufft, 100);
+	this->tipEveniment = bufft;
+
+	in >> this->data;
+
+	in >> this->ora;
+
+	in >> this->nrMaxLocuri;
+	delete[] this->locuri;
+	this->locuri = new int[this->nrMaxLocuri];
+	for (int i = 0; i < this->nrMaxLocuri; i++)
+	{
+		in >> this->locuri[i];
+	}
+
+	in >> this->nrOcupate;
+
+
+
+}
